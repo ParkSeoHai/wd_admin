@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import UserIndex from '../../components/User/Index.vue';
+---
+
+<Layout title="User">
+	<section id="listUser" class="grid-custom full pt-4">
+		<UserIndex client:load />
+	</section>
+</Layout>

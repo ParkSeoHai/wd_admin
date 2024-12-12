@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AddProduct from '../../components/Product/Add.vue';
+---
+
+<Layout title="Add Product">
+	<section id="addProduct" class="grid-custom pt-4">
+		<AddProduct client:load />
+	</section>
+</Layout>

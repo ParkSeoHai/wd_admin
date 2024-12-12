@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AddUser from '../../components/User/Add.vue';
+---
+
+<Layout title="Add User">
+	<section id="addUser" class="grid-custom full pt-4">
+		<AddUser client:load />
+	</section>
+</Layout>

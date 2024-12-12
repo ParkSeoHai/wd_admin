@@ -1,0 +1,23 @@
+---
+import Header from "../components/Header.vue";
+import Navbar from "../components/Navbar.vue";
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} - WdSmart</title>
+	</head>
+	<body class="bg-[#f6fafd]">
+		<Header client:load />
+		<Navbar client:load />
+		<main class="main-container min-h-screen pb-10">
+			<slot />
+		</main>
+	</body>
+</html>
