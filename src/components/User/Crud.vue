@@ -4,31 +4,6 @@ import FormCrud from "../FormCrud.vue";
 
 const collection = "user";
 
-// actions crud
-const actions = ref([
-  {
-    text: "Lưu",
-    className: "btn-primary",
-    action: "add",
-    emit: false,
-    show: false,
-  },
-  {
-    text: "Cập nhật",
-    className: "btn-primary",
-    action: "update",
-    emit: false,
-    show: false,
-  },
-  {
-    text: "Xóa",
-    className: "btn-danger",
-    action: "delete",
-    emit: false,
-    show: false,
-  },
-]);
-
 const crudConfig = ref([
   {
     text: "Thông tin người dùng",
@@ -154,6 +129,6 @@ const crudConfig = ref([
 </script>
 <template>
   <div id="b2">
-    <FormCrud :crud="crudConfig" :actions="actions" :collection="collection" />
+    <FormCrud :crud="crudConfig" :collection="collection" />
   </div>
 </template>

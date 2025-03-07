@@ -262,6 +262,7 @@
 .form-crud__custom--image .image {
     width: 100%;
     border-radius: 6px;
+    height: 100%;
     border: 1px solid var(--color-primary);
 }
 
@@ -276,7 +277,7 @@
     font-weight: 600;
     font-size: 1.6rem;
     gap: 10px;
-    min-height: 100px;
+    padding: 6px;
     border: 1px dashed #8e8e8e;
     background-color: #f3f4f6;
 }

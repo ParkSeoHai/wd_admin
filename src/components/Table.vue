@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import _ from "lodash";
+import { toast } from "vue3-toastify";
 import Button from "./Button.vue";
 import { getDataTable, formatter } from "../utils";
 
@@ -28,27 +29,31 @@ const getParamsPage = () => {
 };
 
 const initTable = async () => {
-  const param = getParamsPage();
-  let searchQuery = {
-    $or: [],
-  };
-  if (param.search) {
-    searchStr.value = param.search;
-    props.table.search?.map((item) => {
-      searchQuery.$or.push({ [item]: { $regex: param.search, $options: "i" } });
+  try {
+    const param = getParamsPage();
+    let searchQuery = {
+      $or: [],
+    };
+    if (param.search) {
+      searchStr.value = param.search;
+      props.table.search?.map((item) => {
+        searchQuery.$or.push({ [item]: { $regex: param.search, $options: "i" } });
+      });
+    }
+    let page = param.page;
+    if (page < 1) page = 1;
+    // get data
+    const { msg, data, options } = await getDataTable({
+      collection: props.colection,
+      columns: props.table.columns,
+      page,
+      searchQuery,
     });
+    dataTable.value = data;
+    optionsTable.value = options;
+  } catch (error) {
+    toast.error(error.response.data.message);
   }
-  let page = param.page;
-  if (page < 1) page = 1;
-  // get data
-  const { msg, data, options } = await getDataTable({
-    collection: props.colection,
-    columns: props.table.columns,
-    page,
-    searchQuery,
-  });
-  dataTable.value = data;
-  optionsTable.value = options;
 };
 
 const searchAction = () => {
@@ -60,7 +65,7 @@ const searchAction = () => {
 };
 
 const crudAction = (id = null) => {
-  let url = `${window.location.origin}${window.location.pathname}/add`;
+  let url = `${window.location.origin}${window.location.pathname}/crud`;
   if (id) url += `?id=${id}`;
   console.log(url);
   window.location = url;
@@ -148,8 +153,8 @@ onMounted(async () => {
           <tr
             v-for="(item, index) in dataTable"
             :key="index"
+            class="cursor-pointer hover:bg-[#166e6a]/10"
             @click.prevent="crudAction(item._id)"
-            class="cursor-pointer"
           >
             <td>{{ index + 1 }}</td>
             <template v-for="(key, index) in table.columns" :key="index">

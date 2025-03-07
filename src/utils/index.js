@@ -40,13 +40,14 @@ const getDataTable = async ({ collection, columns = [], searchQuery, page = 1, s
         };
     } catch (error) {
         console.error(error);
+        throw error;
     }
 };
 
-const addOrUpdateDocument = async ({ collection, data }) => {
+const addOrUpdateDocument = async ({ collection, data, action }) => {
     try {
         const response = await axios.post(`${URL_API}/api/v1/${collection}/crud/addOrUpdate`, {
-            data
+            data, action
         });
         if (response.data.status !== 201) {
             throw Error(response.data.message);
@@ -54,6 +55,7 @@ const addOrUpdateDocument = async ({ collection, data }) => {
         return response.data.metadata;
     } catch (err) {
         console.error(err);
+        throw err;
     }
 }
 
@@ -66,10 +68,39 @@ const getDocById = async ({ collection, id }) => {
         return response.data.metadata;
     } catch (err) {
         console.error(err);
+        throw err;
+    }
+}
+
+const deleteDocById = async ({ collection, id }) => {
+    try {
+        const response = await axios.post(`${URL_API}/api/v1/${collection}/crud/deleteById`, {
+            id
+        });
+        if (response.data.status !== 200) {
+            throw Error(response.data.message);
+        }
+        return response.data;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
+
+const getAllCategories = async ({ collection }) => {
+    try {
+        const response = await axios.get(`${URL_API}/api/v1/${collection}/getAllCategories`);
+        if (response.data.status !== 200) {
+            throw Error(response.data.message);
+        }
+        return response.data;
+    } catch (err) {
+        console.error(err);
+        throw err;
     }
 }
 
 export {
     getDataTable, formatter, getParamsPage, addOrUpdateDocument,
-    getDocById
+    getDocById, deleteDocById, getAllCategories
 };
